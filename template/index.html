@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auto Reload Data</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .water {
+            background-color: aqua;
+            text-align: center;
+            padding: 10px;
+        }
+        .wind {
+            background-color: aquamarine;
+            text-align: center;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class='water' id='water'>
+        <h1>Water</h1>
+        <p>Ketinggian: {{ .water }}</p>
+        <p>Status: {{ .waterStatus }}</p>
+    </div>
+    <div class='wind' id='wind'>
+        <h1>Wind</h1>
+        <p>Kecepatan: {{ .wind }}</p>
+        <p>Status: {{ .windStatus }}</p>
+    </div>
+</body>
+</html>

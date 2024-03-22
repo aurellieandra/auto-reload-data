@@ -35,7 +35,8 @@ func main() {
 		}
 	}()
 
-	g.GET("/", func(ctx *gin.Context) {
+	g.GET("/json", func(ctx *gin.Context) {
+
 		var waterStatus string
 		var windStatus string
 
@@ -44,20 +45,20 @@ func main() {
 
 		switch {
 		case water <= 50:
-			waterStatus = "aman"
+			waterStatus = "Aman"
 		case water >= 80:
-			waterStatus = "bahaya"
+			waterStatus = "Bahaya"
 		default:
-			waterStatus = "siaga"
+			waterStatus = "Siaga"
 		}
 
 		switch {
 		case wind <= 60:
-			windStatus = "aman"
+			windStatus = "Aman"
 		case wind >= 90:
-			windStatus = "bahaya"
+			windStatus = "Bahaya"
 		default:
-			windStatus = "siaga"
+			windStatus = "Siaga"
 		}
 
 		response := map[string]interface{}{
@@ -68,6 +69,40 @@ func main() {
 		}
 
 		ctx.JSON(http.StatusOK, response)
+	})
+
+	g.LoadHTMLGlob("template/*")
+	g.GET("/index", func(ctx *gin.Context) {
+		var waterStatus string
+		var windStatus string
+
+		water := elementData["water"].Value
+		wind := elementData["wind"].Value
+
+		switch {
+		case water <= 50:
+			waterStatus = "Aman"
+		case water >= 80:
+			waterStatus = "Bahaya"
+		default:
+			waterStatus = "Siaga"
+		}
+
+		switch {
+		case wind <= 60:
+			windStatus = "Aman"
+		case wind >= 90:
+			windStatus = "Bahaya"
+		default:
+			windStatus = "Siaga"
+		}
+
+		ctx.HTML(http.StatusOK, "index.html", map[string]any{
+			"water":       fmt.Sprintf("%d %s", water, elementData["water"].Unit),
+			"waterStatus": waterStatus,
+			"wind":        fmt.Sprintf("%d %s", wind, elementData["wind"].Unit),
+			"windStatus":  windStatus,
+		})
 	})
 	g.Run(":3000")
 }
